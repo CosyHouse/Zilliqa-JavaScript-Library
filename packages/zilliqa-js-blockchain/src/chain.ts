@@ -413,15 +413,21 @@ export class Blockchain implements ZilliqaModule {
         const tx = signedTxList[i];
         const txRes = response.batch_result[i];
 
+        let resultTx;
         if (blockConfirm) {
-          batchResults.push(
-            await tx.blockConfirm(txRes.result.TranID, maxAttempts, interval),
+          resultTx = await tx.blockConfirm(
+            txRes.result.TranID,
+            maxAttempts,
+            interval,
           );
         } else {
-          batchResults.push(
-            await tx.confirm(txRes.result.TranID, maxAttempts, interval),
+          resultTx = await tx.confirm(
+            txRes.result.TranID,
+            maxAttempts,
+            interval,
           );
         }
+        batchResults.push(resultTx);
       }
       return batchResults;
     } catch (err) {
