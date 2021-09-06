@@ -17,6 +17,7 @@
 
 import { RPCResponse } from './net';
 import { Middleware } from './util';
+import { BN, Long } from '@zilliqa-js/util';
 
 export type Subscriber = (event: any) => void;
 export type Subscribers = Map<SubscriptionToken, Subscriber>;
@@ -227,6 +228,37 @@ export interface TransactionReceiptObj<TGas = string> {
   errors?: any;
 }
 
+export type TxReceipt = TransactionReceiptObj<number>;
+export interface TxCreated {
+  Info: string;
+  TranID: string;
+  ContractAddress?: string;
+}
+
+export interface TxRejected {
+  Error: string;
+}
+
+export interface TxIncluded {
+  ID: string;
+  receipt: TransactionReceiptObj;
+}
+
+export interface TxParams {
+  version: number;
+  toAddr: string;
+  amount: BN;
+  gasPrice: BN;
+  gasLimit: Long;
+
+  code?: string;
+  data?: string;
+  receipt?: TxReceipt;
+  nonce?: number;
+  pubKey?: string;
+  signature?: string;
+}
+
 export interface ExceptionEntry {
   line: number;
   message: string;
@@ -272,4 +304,45 @@ export interface MinerInfo {
 export interface ShardInfo {
   nodes: string[];
   size: number;
+}
+
+export interface Transition {
+  vname: string;
+  params: Field[];
+}
+
+export interface Field {
+  vname: string;
+  type: string;
+  depth?: number;
+}
+
+interface ADTValue {
+  constructor: string;
+  argtypes: string[];
+  arguments: Value[];
+}
+
+export interface Value {
+  vname: string;
+  type: string;
+  value: string | ADTValue;
+}
+
+/**
+ * Interface for ABI returned by scilla-checker
+ */
+export interface ABI {
+  scilla_major_version: number;
+  vname: string;
+  fields: Field[];
+  params: Field[];
+  transitions: Transition[];
+}
+
+export interface ContractObj {
+  address: string;
+  abi: ABI;
+  init: any;
+  state: any;
 }

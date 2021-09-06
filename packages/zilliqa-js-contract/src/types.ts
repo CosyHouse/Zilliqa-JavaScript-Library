@@ -16,7 +16,14 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { Omit } from 'utility-types';
-import { TxParams } from '@zilliqa-js/account';
+import * as core from '@zilliqa-js/core';
+
+export type TxParams = core.TxParams;
+export type ContractObj = core.ContractObj;
+export type Transition = core.Transition;
+export type ABI = core.ABI;
+export type Value = core.Value;
+export type Field = core.Field;
 
 export enum ContractStatus {
   Deployed,
@@ -33,47 +40,6 @@ export type CallParams = Omit<
   TxParams,
   'toAddr' | 'data' | 'code' | 'receipt' | 'signature'
 >;
-
-export interface ContractObj {
-  address: string;
-  abi: ABI;
-  init: any;
-  state: any;
-}
-
-export interface Transition {
-  vname: string;
-  params: Field[];
-}
-
-/**
- * Interface for ABI returned by scilla-checker
- */
-export interface ABI {
-  scilla_major_version: number;
-  vname: string;
-  fields: Field[];
-  params: Field[];
-  transitions: Transition[];
-}
-
-export interface Field {
-  vname: string;
-  type: string;
-  depth?: number;
-}
-
-export interface Value {
-  vname: string;
-  type: string;
-  value: string | ADTValue;
-}
-
-interface ADTValue {
-  constructor: string;
-  argtypes: string[];
-  arguments: Value[];
-}
 
 export type Param = Value;
 export type TransitionParam = Value;

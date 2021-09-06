@@ -15,46 +15,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { BN, Long } from '@zilliqa-js/util';
-import { TransactionReceiptObj } from '@zilliqa-js/core';
+import * as core from '@zilliqa-js/core';
+
+export type TxParams = core.TxParams;
+export type TxCreated = core.TxCreated;
+export type TxRejected = core.TxRejected;
+export type TxReceipt = core.TxReceipt;
+export type TxIncluded = core.TxIncluded;
 
 export enum TxStatus {
   Initialised,
   Pending,
   Confirmed,
   Rejected,
-}
-
-export interface TxCreated {
-  Info: string;
-  TranID: string;
-  ContractAddress?: string;
-}
-
-export interface TxRejected {
-  Error: string;
-}
-
-export type TxReceipt = TransactionReceiptObj<number>;
-
-export interface TxIncluded {
-  ID: string;
-  receipt: TransactionReceiptObj;
-}
-
-export interface TxParams {
-  version: number;
-  toAddr: string;
-  amount: BN;
-  gasPrice: BN;
-  gasLimit: Long;
-
-  code?: string;
-  data?: string;
-  receipt?: TxReceipt;
-  nonce?: number;
-  pubKey?: string;
-  signature?: string;
 }
 
 export enum TxEventName {

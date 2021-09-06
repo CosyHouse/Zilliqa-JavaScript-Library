@@ -18,7 +18,7 @@
 import { Transaction, util, Wallet } from '@zilliqa-js/account';
 import { fromBech32Address } from '@zilliqa-js/crypto';
 import { validation } from '@zilliqa-js/util';
-import { ContractObj, Value } from '@zilliqa-js/contract';
+import { ContractObj, Value } from '@zilliqa-js/core';
 import {
   BlockchainInfo,
   BlockList,
